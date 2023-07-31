@@ -3,6 +3,8 @@ package com.mygroup.sbb.answer;
 import java.time.LocalDateTime;
 
 import com.mygroup.sbb.question.Question;
+import com.mygroup.sbb.user.SiteUser;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,4 +29,7 @@ public class Answer {
 
     @ManyToOne
     private Question question;
+
+    @ManyToOne
+    private SiteUser author;
 }

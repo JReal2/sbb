@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.mygroup.sbb.DataNotFoundException;
 
+import com.mygroup.sbb.user.SiteUser;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,11 +34,12 @@ public class QuestionService {
         return this.questionRepository.findById(id).orElseThrow(() -> new DataNotFoundException("존재하지 않는 질문입니다." + id));
     }
 
-    public void create(String subject, String content) {
+    public void create(String subject, String content, SiteUser author) {
         Question q = new Question();
         q.setSubject(subject);
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
+        q.setAuthor(author);
         this.questionRepository.save(q);
     }
 
