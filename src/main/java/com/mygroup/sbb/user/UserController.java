@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
+
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
@@ -50,4 +51,10 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login_form";
+    }
+    
 }
