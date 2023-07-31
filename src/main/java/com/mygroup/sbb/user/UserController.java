@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
-
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/user")
@@ -56,5 +55,4 @@ public class UserController {
     public String login() {
         return "login_form";
     }
-    
 }
