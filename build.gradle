@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.mygroup'
-version = '0.7.1-SNAPSHOT'
+version = '0.7.4'
 
 java {
 	sourceCompatibility = '17'
@@ -34,6 +34,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '8.0.33'
 }
 
 tasks.named('test') {
