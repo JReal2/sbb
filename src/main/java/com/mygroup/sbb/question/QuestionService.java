@@ -34,13 +34,13 @@ public class QuestionService {
         return this.questionRepository.findById(id).orElseThrow(() -> new DataNotFoundException("존재하지 않는 질문입니다." + id));
     }
 
-    public void create(String subject, String content, SiteUser author) {
+    public Question create(String subject, String content, SiteUser author) {
         Question q = new Question();
         q.setSubject(subject);
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
         q.setAuthor(author);
-        this.questionRepository.save(q);
+        return this.questionRepository.save(q);
     }
 
     public void modify(Question question, String subject, String content) {
