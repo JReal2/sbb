@@ -25,7 +25,10 @@ jobs:
         registry: https://jungreal.azurecr.io/
         username: ${{ secrets.AzureAppService_ContainerUsername_1e7bde7b20e44a6290942ef19030a516 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_3accc5b19f3049fab05643cdb5a64d30 }}
-
+    
+    - run: chmod 777 ./gradlew
+      name: gradle file permission change
+      
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
