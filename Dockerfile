@@ -3,6 +3,7 @@ WORKDIR /workspace/app
 
 COPY . .
 
+RUN chmod 777 ./gradlew 
 RUN ./gradlew build -x test
 RUN mkdir build/dependency && (cd build/dependency; jar -xf ../libs/sbb-0.7.5.jar)
 
