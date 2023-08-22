@@ -9,7 +9,6 @@ on:
     # 리스트 형태이기 때문에 여러개를 적어도 됩니다.
 
 env:
-  DOCKER_IMAGE: ghcr.io/jreal2/sbb
   VERSION: ${{ github.sha }}
   CONTAINER_NAME: sbb
   # Docker image 를 ghcr.io 에 올릴 때 우리의github이름/이미지이름 으로 저장한다. 이미지이름을 정해주면 된다.
@@ -56,7 +55,7 @@ jobs:
         with:
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:latest
+          tags: ghcr.io/${{ env.OWNER_LC }}/sbb:latest
   
   deploy:
     needs: build
@@ -64,6 +63,12 @@ jobs:
     runs-on: ubuntu-latest
     # label-newproject 라는 이름으로 AWS EC2 가 Runner 를 작동시킬 때 사용했던 그 label
     steps:
+      - name: set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.repository_owner }}'
+          
       - name: Dokcer Login
         uses: appleboy/ssh-action@master
         env:
@@ -86,7 +91,7 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             whoami
-            docker pull ${{ env.DOCKER_IMAGE }}:latest
+            docker pull ghcr.io/${{ env.OWNER_LC }}/sbb:latest
 
       - name: Run
         uses: appleboy/ssh-action@master
@@ -97,5 +102,5 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             whoami
-            docker stop ${{ env.CONTAINER_NAME }} && docker rm ${{ env.CONTAINER_NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
-            docker run -d -p 8081:8080 --name ${{ env.CONTAINER_NAME }} --restart always ${{ env.DOCKER_IMAGE }}:latest
+            docker stop ${{ env.CONTAINER_NAME }} && docker rm ${{ env.CONTAINER_NAME }} && docker rmi ghcr.io/${{ env.OWNER_LC }}/sbb:latest
+            docker run -d -p 8081:8080 --name ${{ env.CONTAINER_NAME }} --restart always ghcr.io/${{ env.OWNER_LC }}/sbb:latest
